@@ -94,12 +94,16 @@ header {
 .card {
     width: 80%;
     max-width: 400px;
+    height: 300px;
+    /* Establecer una altura fija para todas las cartas */
     margin: 20px;
     border-radius: 10px;
     padding: 20px;
     text-align: center;
     background: rgba(255, 173, 90, 0.8);
     position: relative;
+    overflow: hidden;
+    /* Añadir overflow: hidden para evitar que el contenido sobresalga de la tarjeta */
 }
 
 .card img {

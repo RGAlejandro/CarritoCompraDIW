@@ -1,0 +1,150 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    background-image: url('./imagenes/imagenes/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #545454;
+    z-index: 999;
+}
+
+.logo img {
+    height: 80px;
+    max-width: 100%;
+    margin-right: 10px;
+    /* Ajusta el margen derecho del logotipo */
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-right: 50px;
+    /* Ajusta el margen derecho del user-info */
+}
+
+.user-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.cart {
+    margin-left: 1250px;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.cart img {
+    width: 40px;
+    height: auto;
+    cursor: pointer;
+}
+
+.cart img:hover {
+    opacity: 0.8;
+}
+
+.cart-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.cart-button:hover {
+    background-color: #0056b3;
+}
+
+.user-details {
+    color: #333;
+    text-decoration: none;
+}
+
+.card-container {
+    margin-top: 120px;
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    width: 80%;
+    max-width: 400px;
+    margin: 20px;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    background: rgba(255, 173, 90, 0.8);
+    position: relative;
+}
+
+.card img {
+    max-width: 100%;
+    border-radius: 10px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover img {
+    opacity: 0.5;
+    transform: scale(1.1);
+}
+
+.card .detail {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: #fff;
+}
+
+.card:hover .detail {
+    opacity: 1;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #fff;
+}
+
+.price {
+    font-size: 1.6rem;
+    color: #f9d871;
+}
+
+.detail {
+    font-size: 1.4rem;
+    color: #fff;
+    margin-top: 10px;
+}
+
+table {
+    margin: 0 auto;
+}

@@ -19,6 +19,6 @@ if (isset($_GET['registro'])) {
     }
 
     // Redirigir a la página "cartaProducto.php" después de 3 segundos
-    header("refresh:3;url=cartaProducto.php");
+    header("refresh:3;url=index.php");
 }
 ?>

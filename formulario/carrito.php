@@ -51,7 +51,9 @@ session_start();
 <body>
     <header>
         <div class="logo">
+            <a href="cartaProducto.php" class="logo">
             <img src="../imagenes/imagenes/Logotipo.png" alt="Logo Hamburguesería">
+            </a>
         </div>
         <div class="cart">
             <a href="carrito.php" class="cart-link">

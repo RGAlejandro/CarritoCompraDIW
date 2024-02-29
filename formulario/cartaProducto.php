@@ -7,6 +7,42 @@
     <link rel="stylesheet" type="text/css" href="./estilo.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Document</title>
+    <style>
+        /* Estilo para la lista desplegable */
+        /*LISTA DESPLIEGABLE*/
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff; /* Fondo blanco */
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border: 1px solid #ccc; /* Borde gris */
+            border-radius: 5px; /* Bordes redondeados */
+            padding: 5px 0; /* Espacio interior */
+            right: 0; /* Ajusta la posición a la derecha */
+        }
+        
+        .dropdown-content a {
+            color: black;
+            padding: 8px 12px;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .show {
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,9 +55,16 @@
                 <img src="../imagenes/imagenes/carro.png" alt="Carrito de compras" class="cart-image">
             </a>
         </div>
+        <!-- LISTA DEPLEGABLE-->
         <div class="user-info">
-            <a href="editarUsuario.php" class="user-details"><img src="../imagenes/imagenes/usuario.png" alt="Usuario"
-                    class="user-image"></a>
+            <!-- Cambié el enlace directo a editarUsuario.php por un span con la clase dropdown -->
+            <div class="dropdown">
+                <img src="../imagenes/imagenes/usuario.png" alt="Usuario" class="user-image" onclick="toggleDropdown()">
+                <div id="dropdownContent" class="dropdown-content">
+                    <a href="editarUsuario.php">Editar Usuario</a>
+                    <a href="index.php">Cerrar Sesión</a>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -172,6 +215,24 @@
             cartContainer.appendChild(cartItemDiv);
         });
         }
+
+            //BOTON CUENTA
+            function toggleDropdown() {
+            var dropdownContent = document.getElementById("dropdownContent");
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        }
+                // Event listener para cerrar la lista desplegable cuando se hace clic fuera de ella
+                document.addEventListener("click", function(event) {
+            var dropdownContent = document.getElementById("dropdownContent");
+            var userImage = document.querySelector(".user-image");
+            if (event.target !== dropdownContent && event.target !== userImage) {
+                dropdownContent.style.display = "none";
+            }
+        });
     </script>
     
     <div id="cart-items">

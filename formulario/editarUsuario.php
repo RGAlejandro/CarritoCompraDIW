@@ -45,6 +45,10 @@
             margin-top: 10px; /* Agrega espacio arriba */
             margin-bottom: 10px; /* Agrega espacio abajo */
         }
+
+        .error-message {
+            color: red;
+        }
     </style>
 </head>
 
@@ -67,7 +71,7 @@
     <main>
         <div class="container">
             <h2></h2>
-            <form action="procesarEdicionUsuario.php" method="post">
+            <form action="procesarEdicionUsuario.php" method="post" onsubmit="return validateForm()">
                 <div class="form-group">
                     <label for="nombre">Nombre:</label>
                     <input type="text" id="nombre" name="nombre" required>
@@ -82,7 +86,12 @@
                 </div>
                 <div class="form-group">
                     <label for="nueva_password">Nueva Contraseña:</label>
-                    <input type="password" id="nueva_password" name="nueva_password">
+                    <input type="password" id="nueva_password" name="nueva_password" required minlength="8">
+                </div>
+                <div class="form-group">
+                    <label for="confirmar_nueva_password">Confirmar Nueva Contraseña:</label>
+                    <input type="password" id="confirmar_nueva_password" name="confirmar_nueva_password" required minlength="8">
+                    <div id="password-error" class="error-message"></div>
                 </div>
                 <button type="submit">Guardar Cambios</button>
                 <button type="button" onclick="window.history.back()">Cancelar</button>
@@ -124,6 +133,22 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        function validateForm() {
+            var newPassword = document.getElementById("nueva_password").value;
+            var confirmPassword = document.getElementById("confirmar_nueva_password").value;
+            var passwordError = document.getElementById("password-error");
+
+            if (newPassword !== confirmPassword) {
+                passwordError.textContent = "La contraseña nueva no coincide con la de confirmación.";
+                return false; // Evita enviar el formulario si las contraseñas no coinciden
+            } else {
+                passwordError.textContent = ""; // Borra el mensaje de error si las contraseñas coinciden
+                return true; // Permite enviar el formulario si las contraseñas coinciden
+            }
+        }
+    </script>
 </body>
 
 </html>

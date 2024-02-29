@@ -46,19 +46,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($conn->query($sql_update) === TRUE) {
                 echo '<div style="color: green; font-size: larger;">Los datos del usuario se actualizaron correctamente, será redirigido en 3 segundos.</div>';
-                echo '<meta http-equiv="refresh" content="3;url=cartaProducto.html">';
+                echo '<meta http-equiv="refresh" content="3;url=cartaProducto.php">';
             } else {
                 echo '<div style="color: red; font-size: larger;">Error al actualizar los datos del usuario: ' . $conn->error . ', será redirigido en 3 segundos.</div>';
-                echo '<meta http-equiv="refresh" content="3;url=cartaProducto.html">';
+                echo '<meta http-equiv="refresh" content="3;url=cartaProducto.php">';
             }
         } else {
             // La contraseña actual no coincide
             echo '<div style="color: red; font-size: larger;">La contraseña actual es incorrecta</div>';
-            echo '<meta http-equiv="refresh" content="3;url=cartaProducto.html">';
+            echo '<meta http-equiv="refresh" content="3;url=cartaProducto.php">';
         }
     } else {
         echo '<div style="color: red; font-size: larger;">Error: No se encontró al usuario en la base de datos</div>';
-        echo '<meta http-equiv="refresh" content="3;url=cartaProducto.html">';
+        echo '<meta http-equiv="refresh" content="3;url=cartaProducto.php">';
     }
 
     // Cerrar la conexión con la base de datos

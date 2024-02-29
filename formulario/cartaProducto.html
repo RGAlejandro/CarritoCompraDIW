@@ -36,6 +36,7 @@
                         <div class="title">Abuela Dry Aged</div>
                         <div class="price">$5.99</div>
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
+                        <button class="add-to-cart-btn" onclick="addToCart('Abuela Dry Aged', 5.99)">Añadir al carrito</button>
                         </div>
                     </div>
                 </td>
@@ -45,6 +46,7 @@
                         <div class="title">Kika Burguer</div>
                         <div class="price">$5.99</div>
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
+                        <button class="add-to-cart-btn" onclick="addToCart('Kika Burguer', 5.99)">Añadir al carrito</button>
                         </div>
                     </div>
                 </td>
@@ -55,6 +57,7 @@
                         <div class="title">Doble Chesse Bacon</div>
                         <div class="price">$5.99</div>
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
+                        <button class="add-to-cart-btn" onclick="addToCart('Doble Chesse Bacon', 5.99)">Añadir al carrito</button>
                         </div>
                     </div>
                 </td>
@@ -64,6 +67,7 @@
                         <div class="title">Oklahoma</div>
                         <div class="price">$5.99</div>
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
+                        <button class="add-to-cart-btn" onclick="addToCart('Oklahoma', 5.99)">Añadir al carrito</button>
                         </div>
                     </div>
                 </td>
@@ -75,6 +79,7 @@
                         <div class="title">Provocacion</div>
                         <div class="price">$5.99</div>
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
+                        <button class="add-to-cart-btn" onclick="addToCart('Provocacion', 5.99)">Añadir al carrito</button>
                         </div>
                     </div>
                 </td>
@@ -84,6 +89,7 @@
                         <div class="title">Richard Chamberlein</div>
                         <div class="price">$5.99</div>
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
+                        <button class="add-to-cart-btn" onclick="addToCart('Richard Chamberlein', 5.99)">Añadir al carrito</button>
                         </div>
                     </div>
                 </td>
@@ -93,6 +99,7 @@
                         <div class="title">Smash Burguer</div>
                         <div class="price">$5.99</div>
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
+                        <button class="add-to-cart-btn" onclick="addToCart('Smash Burguer', 5.99)">Añadir al carrito</button>
                         </div>
                     </div>
                 </td>
@@ -102,6 +109,7 @@
                         <div class="title">Vegana</div>
                         <div class="price">$5.99</div>
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
+                        <button class="add-to-cart-btn" onclick="addToCart('Vegana', 5.99)">Añadir al carrito</button>
                         </div>
                     </div>
                 </td>
@@ -110,6 +118,56 @@
 
 
     </div>
+    <script>
+        let cartItems = [];
+    
+        function addToCart(productName, price) {
+            // Busca si el producto ya está en el carrito
+            const existingItem = cartItems.find(item => item.name === productName);
+    
+            if (existingItem) {
+                // Si el producto ya está en el carrito, aumenta la cantidad
+                existingItem.quantity++;
+            } else {
+                // Si el producto no está en el carrito, agrégalo
+                cartItems.push({ name: productName, price: price, quantity: 1 });
+            }
+    
+            // Actualiza la vista del carrito
+            renderCart();
+        }
+    
+        function renderCart() {
+            const cartContainer = document.getElementById('cart-items');
+            cartContainer.innerHTML = ''; // Borra el contenido actual del carrito
+    
+            cartItems.forEach(item => {
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.classList.add('cart-item');
+    
+                const itemName = document.createElement('span');
+                itemName.textContent = item.name;
+    
+                const itemPrice = document.createElement('span');
+                itemPrice.textContent = `$${item.price}`;
+    
+                const itemQuantity = document.createElement('span');
+                itemQuantity.textContent = `Cantidad: ${item.quantity}`;
+    
+                cartItemDiv.appendChild(itemName);
+                cartItemDiv.appendChild(itemPrice);
+                cartItemDiv.appendChild(itemQuantity);
+    
+                cartContainer.appendChild(cartItemDiv);
+            });
+        }
+    </script>
+    
+    <div id="cart-items">
+        <!-- Aquí se mostrarán los productos agregados al carrito -->
+    </div>
+    
+
     <footer style="background-color: #545454; color: #fff; padding: 20px; text-align: center;">
         <div style="max-width: 1200px; margin: 0 auto;">
             <div style="display: flex; justify-content: space-between; align-items: flex-start;">

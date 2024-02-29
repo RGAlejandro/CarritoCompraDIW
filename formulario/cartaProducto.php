@@ -35,7 +35,7 @@
                         <img class="imagen" src="../imagenes/imagenes/abueladryage.jpg" alt="Hamburguesa 1">
                         <div class="title">Abuela Dry Aged</div>
                         <div class="price">$5.99</div>
-                        <div><button class="add-to-cart-btn" onclick="addToCart('Abuela Dry Aged', 5.99)">Añadir al carrito</button></div>    
+                        <div><button class="add-to-cart-btn" onclick="addToCart('Abuela Dry Aged', 5.99,'Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.', '../imagenes/imagenes/abueladryage.jpg')">Añadir al carrito</button></div>    
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
                         
                         
@@ -47,7 +47,7 @@
                         <img class="imagen" src="../imagenes/imagenes/kikaburguer.jpg" alt="Hamburguesa 1">
                         <div class="title">Kika Burguer</div>
                         <div class="price">$5.99</div>
-                        <button class="add-to-cart-btn" onclick="addToCart('Kika Burguer', 5.99)">Añadir al carrito</button>
+                        <button class="add-to-cart-btn" onclick="addToCart('Kika Burguer', 5.99,'Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.', '../imagenes/imagenes/kikaburguer.jpg')">Añadir al carrito</button>
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
                         
                         </div>
@@ -59,7 +59,7 @@
                             alt="Hamburguesa 1">
                         <div class="title">Doble Chesse Bacon</div>
                         <div class="price">$5.99</div>
-                        <button class="add-to-cart-btn" onclick="addToCart('Doble Chesse Bacon', 5.99)">Añadir al carrito</button>
+                        <button class="add-to-cart-btn" onclick="addToCart('Doble Chesse Bacon', 5.99,'Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.', '../imagenes/imagenes/doblecheesebacon.jpg')">Añadir al carrito</button>
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
                         
                         </div>
@@ -70,7 +70,7 @@
                         <img class="imagen" src="../imagenes/imagenes/oklahoma.jpg" alt="Hamburguesa 1">
                         <div class="title">Oklahoma</div>
                         <div class="price">$5.99</div>
-                        <button class="add-to-cart-btn" onclick="addToCart('Oklahoma', 5.99)">Añadir al carrito</button>
+                        <button class="add-to-cart-btn" onclick="addToCart('Oklahoma', 5.99,'Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.', '../imagenes/imagenes/oklahoma.jpg')">Añadir al carrito</button>
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
                         
                         </div>
@@ -83,7 +83,7 @@
                         <img class="imagen" src="../imagenes/imagenes/provocacion.jpg" alt="Hamburguesa 1">
                         <div class="title">Provocacion</div>
                         <div class="price">$5.99</div>
-                        <button class="add-to-cart-btn" onclick="addToCart('Provocacion', 5.99)">Añadir al carrito</button>
+                        <button class="add-to-cart-btn" onclick="addToCart('Provocacion', 5.99,'Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.', '../imagenes/imagenes/provocacion.jpg')">Añadir al carrito</button>
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
                         
                         </div>
@@ -94,7 +94,7 @@
                         <img class="imagen" src="../imagenes/imagenes/richard.jpg" alt="Hamburguesa 1">
                         <div class="title">Richard Chamberlein</div>
                         <div class="price">$5.99</div>
-                        <button class="add-to-cart-btn" onclick="addToCart('Richard Chamberlein', 5.99)">Añadir al carrito</button>
+                        <button class="add-to-cart-btn" onclick="addToCart('Richard Chamberlein', 5.99,'Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.', '../imagenes/imagenes/richard.jpg')">Añadir al carrito</button>
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
                         
                         </div>
@@ -105,7 +105,7 @@
                         <img class="imagen" src="../imagenes/imagenes/smashburguer.jpg" alt="Hamburguesa 1">
                         <div class="title">Smash Burguer</div>
                         <div class="price">$5.99</div>
-                        <button class="add-to-cart-btn" onclick="addToCart('Smash Burguer', 5.99)">Añadir al carrito</button>
+                        <button class="add-to-cart-btn" onclick="addToCart('Smash Burguer', 5.99,'Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.', '../imagenes/imagenes/smashburguer.jpg')">Añadir al carrito</button>
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
                         
                         </div>
@@ -116,7 +116,7 @@
                         <img class="imagen" src="../imagenes/imagenes/vegana.jpg" alt="Hamburguesa 1">
                         <div class="title">Vegana</div>
                         <div class="price">$5.99</div>
-                        <button class="add-to-cart-btn" onclick="addToCart('Vegana', 5.99)">Añadir al carrito</button>
+                        <button class="add-to-cart-btn" onclick="addToCart('Vegana', 5.99,'Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.', '../imagenes/imagenes/vegana.jpg')">Añadir al carrito</button>
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
                         
                         </div>
@@ -130,51 +130,47 @@
     <script>
         let cartItems = [];
     
-        function addToCart(productName, price) {
-        // Crea un formulario oculto con los datos del producto y envíalo al servidor
-        const form = document.createElement('form');
-        form.method = 'post';
-        form.action = 'agregar_al_carrito.php';
-
-        const productNameInput = document.createElement('input');
-        productNameInput.type = 'hidden';
-        productNameInput.name = 'productName';
-        productNameInput.value = productName;
-        form.appendChild(productNameInput);
-
-        const priceInput = document.createElement('input');
-        priceInput.type = 'hidden';
-        priceInput.name = 'price';
-        priceInput.value = price;
-        form.appendChild(priceInput);
-
-        document.body.appendChild(form);
-        form.submit();
-    }
+        function addToCart(productName, price, description, image) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "carrito.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Actualizar la interfaz de usuario si es necesario
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.send(`productName=${productName}&price=${price}&description=${description}&image=${image}`);
+        }
     
         function renderCart() {
             const cartContainer = document.getElementById('cart-items');
             cartContainer.innerHTML = ''; // Borra el contenido actual del carrito
-    
+
             cartItems.forEach(item => {
-                const cartItemDiv = document.createElement('div');
-                cartItemDiv.classList.add('cart-item');
-    
-                const itemName = document.createElement('span');
-                itemName.textContent = item.name;
-    
-                const itemPrice = document.createElement('span');
-                itemPrice.textContent = `$${item.price}`;
-    
-                const itemQuantity = document.createElement('span');
-                itemQuantity.textContent = `Cantidad: ${item.quantity}`;
-    
-                cartItemDiv.appendChild(itemName);
-                cartItemDiv.appendChild(itemPrice);
-                cartItemDiv.appendChild(itemQuantity);
-    
-                cartContainer.appendChild(cartItemDiv);
-            });
+            const cartItemDiv = document.createElement('div');
+            cartItemDiv.classList.add('cart-item');
+
+            const itemName = document.createElement('h3');
+            itemName.textContent = item.name;
+
+            const itemPrice = document.createElement('p');
+            itemPrice.textContent = `Precio: $${item.price}`;
+
+            const itemDescription = document.createElement('p');
+            itemDescription.textContent = item.description;
+
+            const itemImage = document.createElement('img');
+            itemImage.src = item.image;
+            itemImage.alt = item.name;
+
+            cartItemDiv.appendChild(itemName);
+            cartItemDiv.appendChild(itemPrice);
+            cartItemDiv.appendChild(itemDescription);
+            cartItemDiv.appendChild(itemImage);
+
+            cartContainer.appendChild(cartItemDiv);
+        });
         }
     </script>
     

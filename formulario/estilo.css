@@ -7,6 +7,16 @@ body {
     background-repeat: no-repeat;
 }
 
+footer {
+    background-color: #545454;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
 header {
     position: fixed;
     top: 0;

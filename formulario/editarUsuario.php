@@ -54,7 +54,7 @@
             <img src="../imagenes/imagenes/Logotipo.png" alt="Logo Hamburguesería">
         </div>
         <div class="cart">
-            <a href="#" class="cart-link">
+            <a href="carrito.php" class="cart-link">
                 <img src="../imagenes/imagenes/carro.png" alt="Carrito de compras" class="cart-image">
             </a>
         </div>

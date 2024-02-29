@@ -20,7 +20,7 @@
             </a>
         </div>
         <div class="user-info">
-            <a href="#" class="user-details"><img src="../imagenes/imagenes/usuario.png" alt="Usuario"
+            <a href="editarUsuario.php" class="user-details"><img src="../imagenes/imagenes/usuario.png" alt="Usuario"
                     class="user-image"></a>
         </div>
     </header>
@@ -35,8 +35,10 @@
                         <img class="imagen" src="../imagenes/imagenes/abueladryage.jpg" alt="Hamburguesa 1">
                         <div class="title">Abuela Dry Aged</div>
                         <div class="price">$5.99</div>
+                        <div><button class="add-to-cart-btn" onclick="addToCart('Abuela Dry Aged', 5.99)">Añadir al carrito</button></div>    
                         <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
-                        <button class="add-to-cart-btn" onclick="addToCart('Abuela Dry Aged', 5.99)">Añadir al carrito</button>
+                        
+                        
                         </div>
                     </div>
                 </td>
@@ -45,8 +47,9 @@
                         <img class="imagen" src="../imagenes/imagenes/kikaburguer.jpg" alt="Hamburguesa 1">
                         <div class="title">Kika Burguer</div>
                         <div class="price">$5.99</div>
-                        <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
                         <button class="add-to-cart-btn" onclick="addToCart('Kika Burguer', 5.99)">Añadir al carrito</button>
+                        <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
+                        
                         </div>
                     </div>
                 </td>
@@ -56,8 +59,9 @@
                             alt="Hamburguesa 1">
                         <div class="title">Doble Chesse Bacon</div>
                         <div class="price">$5.99</div>
-                        <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
                         <button class="add-to-cart-btn" onclick="addToCart('Doble Chesse Bacon', 5.99)">Añadir al carrito</button>
+                        <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
+                        
                         </div>
                     </div>
                 </td>
@@ -66,8 +70,9 @@
                         <img class="imagen" src="../imagenes/imagenes/oklahoma.jpg" alt="Hamburguesa 1">
                         <div class="title">Oklahoma</div>
                         <div class="price">$5.99</div>
-                        <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
                         <button class="add-to-cart-btn" onclick="addToCart('Oklahoma', 5.99)">Añadir al carrito</button>
+                        <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
+                        
                         </div>
                     </div>
                 </td>
@@ -78,8 +83,9 @@
                         <img class="imagen" src="../imagenes/imagenes/provocacion.jpg" alt="Hamburguesa 1">
                         <div class="title">Provocacion</div>
                         <div class="price">$5.99</div>
-                        <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
                         <button class="add-to-cart-btn" onclick="addToCart('Provocacion', 5.99)">Añadir al carrito</button>
+                        <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
+                        
                         </div>
                     </div>
                 </td>
@@ -88,8 +94,9 @@
                         <img class="imagen" src="../imagenes/imagenes/richard.jpg" alt="Hamburguesa 1">
                         <div class="title">Richard Chamberlein</div>
                         <div class="price">$5.99</div>
-                        <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
                         <button class="add-to-cart-btn" onclick="addToCart('Richard Chamberlein', 5.99)">Añadir al carrito</button>
+                        <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
+                        
                         </div>
                     </div>
                 </td>
@@ -98,8 +105,9 @@
                         <img class="imagen" src="../imagenes/imagenes/smashburguer.jpg" alt="Hamburguesa 1">
                         <div class="title">Smash Burguer</div>
                         <div class="price">$5.99</div>
-                        <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
                         <button class="add-to-cart-btn" onclick="addToCart('Smash Burguer', 5.99)">Añadir al carrito</button>
+                        <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
+                        
                         </div>
                     </div>
                 </td>
@@ -108,8 +116,9 @@
                         <img class="imagen" src="../imagenes/imagenes/vegana.jpg" alt="Hamburguesa 1">
                         <div class="title">Vegana</div>
                         <div class="price">$5.99</div>
-                        <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
                         <button class="add-to-cart-btn" onclick="addToCart('Vegana', 5.99)">Añadir al carrito</button>
+                        <div class="detail">Deliciosa hamburguesa clásica con carne de res, queso, lechuga y tomate.
+                        
                         </div>
                     </div>
                 </td>

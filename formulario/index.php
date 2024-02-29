@@ -78,7 +78,7 @@
     <script>
         // Función para redirigir después de 5 segundos
         function redirectToCartaProductos() {
-            window.location.href = "cartaProducto.html";
+            window.location.href = "cartaProducto.php";
         }
 
         // Verificar si se muestra el mensaje de inicio de sesión exitoso

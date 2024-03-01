@@ -1,5 +1,17 @@
 <?php
 session_start();
+
+// Verificar si se ha enviado el formulario para vaciar el carrito
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['vaciar_carrito'])) {
+    // Verificar si el carrito existe antes de intentar vaciarlo
+    if (isset($_SESSION['cart'])) {
+        // Vaciar el carrito
+        unset($_SESSION['cart']);
+        // Redirigir a la misma página para actualizar la interfaz de usuario
+        header("Location: carrito.php");
+        exit();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -87,15 +99,28 @@ session_start();
         }
         $total = array_sum(array_column($_SESSION['cart'], 'price'));
         echo '<p>Total: $' . $total . '</p>';
+        echo '<form method="post" action="">';
+        echo '<button type="submit" name="vaciar_carrito" class="vaciar-carrito-btn">Vaciar Carrito</button>';
+        echo '</form>';
     } else {
         echo '<p>El carrito está vacío.</p>';
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Verifica si se ha enviado el formulario para vaciar el carrito
+        if (isset($_POST['vaciar_carrito'])) {
+            // Vaciar el carrito
+            unset($_SESSION['cart']);
+            // Devuelve una respuesta opcional
+            echo '<p>Carrito vaciado exitosamente.</p>';
+        }
     }
     ?>
 
 
 <?php
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" /*&& isset($_POST['agregar_producto'])*/) {
     if (!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = array();
     }

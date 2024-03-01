@@ -208,3 +208,18 @@ form button {
 form button:hover {
     background-color: #444; 
 }
+
+.vaciar-carrito-btn {
+    background-color: #ff0000; /* Color de fondo rojo */
+    color: #fff; /* Color del texto blanco */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Espacio interior */
+    font-size: 16px; /* Tamaño del texto */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    border-radius: 5px; /* Bordes redondeados */
+    margin-top: 10px; /* Espacio superior */
+}
+
+.vaciar-carrito-btn:hover {
+    background-color: #cc0000; /* Cambia el color de fondo al pasar el ratón */
+}

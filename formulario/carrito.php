@@ -24,38 +24,106 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['vaciar_carrito'])) {
     <link rel="stylesheet" type="text/css" href="./estilo.css">
     <style>
         /* Estilo para la lista desplegable */
-        /*LISTA DESPLIEGABLE*/
         .dropdown {
             position: relative;
             display: inline-block;
         }
-        
+
         .dropdown-content {
             display: none;
             position: absolute;
-            background-color: #fff; /* Fondo blanco */
+            background-color: #fff;
             min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             z-index: 1;
-            border: 1px solid #ccc; /* Borde gris */
-            border-radius: 5px; /* Bordes redondeados */
-            padding: 5px 0; /* Espacio interior */
-            right: 0; /* Ajusta la posición a la derecha */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px 0;
+            right: 0;
         }
-        
+
         .dropdown-content a {
             color: black;
             padding: 8px 12px;
             text-decoration: none;
             display: block;
         }
-        
+
         .dropdown-content a:hover {
             background-color: #f1f1f1;
         }
-        
+
         .show {
             display: block;
+        }
+
+        /* Estilo para el contenedor de la tabla de productos */
+        .container {
+            max-width: 800px;
+            margin: 100px auto 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .cart-table th,
+        .cart-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        .cart-table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+        }
+
+        .product-name {
+            font-weight: bold;
+        }
+
+        .product-price {
+            font-style: italic;
+        }
+
+        .total-row {
+            font-weight: bold;
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .vaciar-carrito-btn {
+            background-color: #e63900;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .vaciar-carrito-btn:hover {
+            background-color: #e63900;
         }
     </style>
 </head>
@@ -64,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['vaciar_carrito'])) {
     <header>
         <div class="logo">
             <a href="cartaProducto.php" class="logo">
-            <img src="../imagenes/imagenes/Logotipo.png" alt="Logo Hamburguesería">
+                <img src="../imagenes/imagenes/Logotipo.png" alt="Logo Hamburguesería">
             </a>
         </div>
         <div class="cart">
@@ -73,7 +141,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['vaciar_carrito'])) {
             </a>
         </div>
         <div class="user-info">
-            <!-- Cambié el enlace directo a editarUsuario.php por un span con la clase dropdown -->
             <div class="dropdown">
                 <img src="../imagenes/imagenes/usuario.png" alt="Usuario" class="user-image" onclick="toggleDropdown()">
                 <div id="dropdownContent" class="dropdown-content">
@@ -84,66 +151,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['vaciar_carrito'])) {
         </div>
     </header>
     <h2>CARRITO</h2>
-    <div class="card-container">
-    
-    <?php
-    // Verifica si la sesión del carrito existe
-    if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
-        echo '<h2>Carrito:</h2><br>';
-        foreach ($_SESSION['cart'] as $item) {
-            echo '<div class="cart-item">';
-            echo '<h3>' . $item['productName'] . '</h3>';
-            echo '<img src="' . $item['image'] . '" alt="' . $item['productName'] . '" class="product-image" style="width: 200px; height: 200px;">';
-            echo '<p>Precio: $' . $item['price'] . '</p>';
-            echo '</div>';
+    <div class="container">
+
+        <?php
+        // Verifica si la sesión del carrito existe
+        if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+            echo '<table class="cart-table">';
+            echo '<tr>';
+            echo '<th>Producto</th>';
+            echo '<th>Imagen</th>';
+            echo '<th>Precio</th>';
+            echo '<th>Cantidad</th>'; // Nuevo campo "Cantidad"
+            echo '</tr>';
+            foreach ($_SESSION['cart'] as $item) {
+                echo '<tr>';
+                echo '<td class="product-name">' . $item['productName'] . '</td>';
+                echo '<td><img src="' . $item['image'] . '" alt="' . $item['productName'] . '" class="product-image"></td>';
+                echo '<td class="product-price">$' . $item['price'] . '</td>';
+                echo '<td>'; // Abre la celda para el menú desplegable
+                echo '<select name="cantidad">';
+                for ($i = 0; $i <= 10; $i++) {
+                    echo '<option value="' . $i . '">' . $i . '</option>';
+                }
+                echo '</select>';
+                echo '</td>'; // Cierra la celda para el menú desplegable
+                echo '</tr>';
+            }
+            echo '</table>';
+            $total = array_sum(array_column($_SESSION['cart'], 'price'));
+            echo '<form method="post" action="">';
+            echo '<button type="submit" name="vaciar_carrito" class="vaciar-carrito-btn">Vaciar Carrito</button>';
+            echo '</form>';
+            echo '<p class="total-row">Total: $' . $total . '</p>';
+        } else {
+            echo '<p>El carrito está vacío.</p>';
         }
-        $total = array_sum(array_column($_SESSION['cart'], 'price'));
-        echo '<p>Total: $' . $total . '</p>';
-        echo '<form method="post" action="">';
-        echo '<button type="submit" name="vaciar_carrito" class="vaciar-carrito-btn">Vaciar Carrito</button>';
-        echo '</form>';
-    } else {
-        echo '<p>El carrito está vacío.</p>';
-    }
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Verifica si se ha enviado el formulario para vaciar el carrito
-        if (isset($_POST['vaciar_carrito'])) {
-            // Vaciar el carrito
-            unset($_SESSION['cart']);
-            // Devuelve una respuesta opcional
-            echo '<p>Carrito vaciado exitosamente.</p>';
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Verifica si se ha enviado el formulario para vaciar el carrito
+            if (isset($_POST['vaciar_carrito'])) {
+                // Vaciar el carrito
+                unset($_SESSION['cart']);
+                // Devuelve una respuesta opcional
+                echo '<p>Carrito vaciado exitosamente.</p>';
+            }
         }
-    }
-    ?>
+        ?>
 
 
-<?php
+        <?php
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" /*&& isset($_POST['agregar_producto'])*/) {
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = array();
-    }
+        if ($_SERVER["REQUEST_METHOD"] == "POST" /*&& isset($_POST['agregar_producto'])*/) {
+            if (!isset($_SESSION['cart'])) {
+                $_SESSION['cart'] = array();
+            }
 
-    // Recibe los datos del producto del formulario
-    $productName = $_POST['productName'];
-    $price = $_POST['price'];
-    $description = $_POST['description'];
-    $image = $_POST['image'];
+            // Recibe los datos del producto del formulario
+            $productName = $_POST['productName'];
+            $price = $_POST['price'];
+            $description = $_POST['description'];
+            $image = $_POST['image'];
 
-    // Agrega el producto al carrito
-    $product = array(
-        'productName' => $productName,
-        'price' => $price,
-        'description' => $description,
-        'image' => $image
-    );
-    array_push($_SESSION['cart'], $product);
+            // Agrega el producto al carrito
+            $product = array(
+                'productName' => $productName,
+                'price' => $price,
+                'description' => $description,
+                'image' => $image
+            );
+            array_push($_SESSION['cart'], $product);
 
-    // Devuelve una respuesta opcional (puede ser útil para manejar la actualización de la interfaz de usuario)
-    echo "Producto agregado al carrito exitosamente.";
-}
-?>
+            // Devuelve una respuesta opcional (puede ser útil para manejar la actualización de la interfaz de usuario)
+            echo "Producto agregado al carrito exitosamente.";
+        }
+        ?>
     </div>
 
     <footer style="background-color: #545454; color: #fff; padding: 20px; text-align: center;">
@@ -155,49 +236,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" /*&& isset($_POST['agregar_producto'])*
                 </div>
                 <div style="flex: 1;">
                     <h3>Sobre nosotros</h3>
-                    <p>Somos una empresa apasionada por las hamburguesas, comprometida con la calidad y el sabor
-                        auténtico.</p>
+                    <p>Somos una empresa apasionada por las hamburguesas, comprometida con la calidad y el sabor auténtico.</p>
                 </div>
-                <div style="flex: 1;">
-                    <h3>Contacto</h3>
-                    <p>Teléfono: 123-456-789</p>
-                    <p>Email: info@hamburguesassevilla.com</p>
-                </div>
-                <div style="flex: 1;">
-                    <!-- Iconos de redes sociales -->
-                    <a href="#" style="color: #fff; margin-right: 10px;"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" style="color: #fff; margin-right: 10px;"><i class="fab fa-twitter"></i></a>
-                    <a href="#" style="color: #fff; margin-right: 10px;"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-            <hr style="border-color: #9c9b9b;">
-            <div>
-                <img src="../imagenes/imagenes/Logotipo.png" alt="Logo de la empresa"
-                    style="max-width: 100px; margin: 0 auto;">
-            </div>
-            <div style="text-align: center;">
-                <p>&copy; 2024 Ray's Burger. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 </body>
-<script>
-            function toggleDropdown() {
-            var dropdownContent = document.getElementById("dropdownContent");
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
-        }
-                // Event listener para cerrar la lista desplegable cuando se hace clic fuera de ella
-                document.addEventListener("click", function(event) {
-            var dropdownContent = document.getElementById("dropdownContent");
-            var userImage = document.querySelector(".user-image");
-            if (event.target !== dropdownContent && event.target !== userImage) {
-                dropdownContent.style.display = "none";
-            }
-        });
-</script>
 
 </html>

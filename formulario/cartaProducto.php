@@ -108,7 +108,7 @@
                 echo "<img class='imagen' src='../imagenes/imagenes/" . $row['imagen'] . "' alt='" . $row['imagen'] . "'>";
                 echo "<div class='title'>" . $row['nombre'] . "</div>";
                 echo "<div class='price'>$" . $row['precio'] . "</div>";
-                echo "<button class='add-to-cart-btn' onclick=\"addToCart('" . $row['nombre'] . "', " . $row['precio'] . ", '" . $row['descripcion'] . "', '../imagenes/imagenes/" . $row['imagen'] . "')\">Añadir al carrito</button>";
+                echo "<button class='add-to-cart-btn' onclick=\"addToCart('" . $row['nombre'] . "', " . $row['precio'] . ", '" . $row['descripcion'] . "', '../imagenes/imagenes/" . $row['imagen'] . "', " . $row['idproducto'] . ")\">Añadir al carrito</button>";
                 echo "<div class='detail'>" . $row['descripcion'] . "</div>";
                 echo "</div>";
                 echo "</td>";
@@ -140,9 +140,9 @@
     <script>
         let cartItems = [];
     
-        function addToCart(productName, price, description, image) {
+        function addToCart(productName, price, description, image, productId) {
             const xhr = new XMLHttpRequest();
-            xhr.open("POST", "carrito.php", true);
+            xhr.open("POST", "agregar_al_carrito.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
@@ -150,7 +150,7 @@
                     console.log(xhr.responseText);
                 }
             };
-            xhr.send(`productName=${productName}&price=${price}&description=${description}&image=${image}`);
+            xhr.send(`productName=${productName}&price=${price}&description=${description}&image=${image}&productId=${productId}`);
         }
     
         function renderCart() {

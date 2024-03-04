@@ -171,14 +171,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['vaciar_carrito'])) {
                 echo '<td>'; // Abre la celda para el menú desplegable
                 echo '<select name="cantidad">';
                 for ($i = 0; $i <= 10; $i++) {
-                    echo '<option value="' . $i . '">' . $i . '</option>';
+                    $selected = ($i == $item['quantity']) ? 'selected' : ''; // Si $i es igual a la cantidad actual del producto, marca la opción como seleccionada
+                    echo '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>';
                 }
                 echo '</select>';
                 echo '</td>'; // Cierra la celda para el menú desplegable
                 echo '</tr>';
             }
             echo '</table>';
-            $total = array_sum(array_column($_SESSION['cart'], 'price'));
+
+            // Calcular el precio total teniendo en cuenta la cantidad seleccionada de cada producto
+            $total = 0;
+            foreach ($_SESSION['cart'] as $item) {
+                $total += ($item['price'] * $item['quantity']);
+            }
+
             echo '<form method="post" action="">';
             echo '<button type="submit" name="vaciar_carrito" class="vaciar-carrito-btn">Vaciar Carrito</button>';
             echo '</form>';

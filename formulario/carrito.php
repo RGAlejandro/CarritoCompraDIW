@@ -126,14 +126,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_producto']) &
         }
 
         .vaciar-carrito-btn {
-            background-color: #e63900;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-right: 10px;
+    background-color: #e63900;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+    margin-bottom: 40px;
+    width: 40%;
         }
 
         .vaciar-carrito-btn:hover {
@@ -143,16 +145,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_producto']) &
         .actualizar-carrito-btn {
             background-color: #007bff;
             color: white;
-            padding: 10px 20px;
+            padding: 10px 5px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            width: 40%;
+            margin-right: 10px;
         }
 
         .actualizar-carrito-btn:hover {
             background-color: #0056b3;
         }
+        .tramitar-pedido-btn {
+    margin-right: 10px; /* Establece el margen derecho */
+    margin-bottom: 30px; /* Establece el margen inferior */
+    width: 40%;
+}
     </style>
 </head>
 
@@ -182,8 +191,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_producto']) &
     <div class="container">
 
         <?php
-
-
         // Verificar si se ha enviado el formulario para vaciar el carrito
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['vaciar_carrito'])) {
             // Verificar si el carrito existe antes de intentar vaciarlo
@@ -279,9 +286,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_producto']) &
             foreach ($_SESSION['cart'] as $item) {
                 $total += ($item['price'] * $item['quantity']);
             }
-
+            echo '<center>';
             echo '<button type="button" onclick="actualizarCarrito()" class="actualizar-carrito-btn">Actualizar Carrito</button>'; // Botón para actualizar carrito
             echo '<button type="submit" name="vaciar_carrito" class="vaciar-carrito-btn">Vaciar Carrito</button>';
+            echo '<button type="button" onclick="tramitarPedido()" class="tramitar-pedido-btn">Tramitar Pedido</button>';
+            echo '</center>';
             echo '<p class="total-row">Total: $' . $total . '</p>';
             echo '</form>';
         } else {
@@ -348,6 +357,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_producto']) &
             document.body.appendChild(form);
             form.submit();
         }
+
+            function tramitarPedido() {
+        // Realizar una solicitud AJAX al servidor para tramitar el pedido
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "tramitar_pedido.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Manejar la respuesta del servidor
+                alert(xhr.responseText); // Mostrar mensaje de éxito o error
+                if (xhr.responseText === "Pedido tramitado exitosamente.") {
+                    // Redirigir a otra página si el pedido se tramitó correctamente
+                    window.location.href = "index.php";
+                }
+            }
+        };
+        xhr.send(); // No es necesario enviar datos en esta solicitud
+    }
     </script>
 
 </body>

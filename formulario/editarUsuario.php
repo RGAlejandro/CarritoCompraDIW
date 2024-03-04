@@ -41,6 +41,15 @@
             margin-bottom: 20px; /* Ajusta el margen inferior */
         }
 
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px; 
+            width: 100%;
+        }
+
         form button {
             margin-top: 10px; /* Agrega espacio arriba */
             margin-bottom: 10px; /* Agrega espacio abajo */

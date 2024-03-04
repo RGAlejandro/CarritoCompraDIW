@@ -12,6 +12,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['vaciar_carrito'])) {
         exit();
     }
 }
+
+// Verificar si se ha enviado el formulario para eliminar un producto del carrito
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_producto']) && isset($_POST['producto_index'])) {
+    $index = $_POST['producto_index'];
+    // Verificar si el índice del producto existe en el carrito
+    if (isset($_SESSION['cart'][$index])) {
+        // Eliminar el producto del carrito
+        unset($_SESSION['cart'][$index]);
+        // Redirigir a la misma página para actualizar la interfaz de usuario
+        header("Location: carrito.php");
+        exit();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -120,10 +133,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['vaciar_carrito'])) {
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            margin-right: 10px;
         }
 
         .vaciar-carrito-btn:hover {
             background-color: #e63900;
+        }
+
+        .actualizar-carrito-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .actualizar-carrito-btn:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -154,28 +182,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['vaciar_carrito'])) {
     <div class="container">
 
         <?php
+
+
+        // Verificar si se ha enviado el formulario para vaciar el carrito
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['vaciar_carrito'])) {
+            // Verificar si el carrito existe antes de intentar vaciarlo
+            if (isset($_SESSION['cart'])) {
+                // Vaciar el carrito
+                unset($_SESSION['cart']);
+                // Redirigir a la misma página para actualizar la interfaz de usuario
+                header("Location: carrito.php");
+                exit();
+            }
+        }
+
         // Verifica si la sesión del carrito existe
         if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+            echo '<form id="formCarrito" method="post" action="">'; // Formulario para actualizar cantidad
             echo '<table class="cart-table">';
             echo '<tr>';
             echo '<th>Producto</th>';
             echo '<th>Imagen</th>';
             echo '<th>Precio</th>';
             echo '<th>Cantidad</th>'; // Nuevo campo "Cantidad"
+            echo '<th>Eliminar</th>'; // Nuevo campo "Eliminar"
             echo '</tr>';
-            foreach ($_SESSION['cart'] as $item) {
+            foreach ($_SESSION['cart'] as $key => $item) {
                 echo '<tr>';
                 echo '<td class="product-name">' . $item['productName'] . '</td>';
                 echo '<td><img src="' . $item['image'] . '" alt="' . $item['productName'] . '" class="product-image"></td>';
                 echo '<td class="product-price">$' . $item['price'] . '</td>';
                 echo '<td>'; // Abre la celda para el menú desplegable
-                echo '<select name="cantidad">';
-                for ($i = 0; $i <= 10; $i++) {
+                echo '<select name="cantidad_' . $key . '" onchange="actualizarCantidad(this.value, \'' . $item['productId'] . '\', ' . $key . ')">';
+                for ($i = 1; $i <= 10; $i++) {
                     $selected = ($i == $item['quantity']) ? 'selected' : ''; // Si $i es igual a la cantidad actual del producto, marca la opción como seleccionada
                     echo '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>';
                 }
                 echo '</select>';
                 echo '</td>'; // Cierra la celda para el menú desplegable
+                echo '<td>'; // Abre la celda para el botón de eliminar
+                echo '<button type="button" onclick="eliminarProducto(' . $key . ')">Eliminar</button>';
+                echo '</td>'; // Cierra la celda para el botón de eliminar
                 echo '</tr>';
             }
             echo '</table>';
@@ -186,52 +233,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['vaciar_carrito'])) {
                 $total += ($item['price'] * $item['quantity']);
             }
 
-            echo '<form method="post" action="">';
+            echo '<button type="button" onclick="actualizarCarrito()" class="actualizar-carrito-btn">Actualizar Carrito</button>'; // Botón para actualizar carrito
             echo '<button type="submit" name="vaciar_carrito" class="vaciar-carrito-btn">Vaciar Carrito</button>';
-            echo '</form>';
             echo '<p class="total-row">Total: $' . $total . '</p>';
+            echo '</form>';
         } else {
             echo '<p>El carrito está vacío.</p>';
         }
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Verifica si se ha enviado el formulario para vaciar el carrito
-            if (isset($_POST['vaciar_carrito'])) {
-                // Vaciar el carrito
-                unset($_SESSION['cart']);
-                // Devuelve una respuesta opcional
-                echo '<p>Carrito vaciado exitosamente.</p>';
-            }
-        }
         ?>
 
-
-        <?php
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST" /*&& isset($_POST['agregar_producto'])*/) {
-            if (!isset($_SESSION['cart'])) {
-                $_SESSION['cart'] = array();
-            }
-
-            // Recibe los datos del producto del formulario
-            $productName = $_POST['productName'];
-            $price = $_POST['price'];
-            $description = $_POST['description'];
-            $image = $_POST['image'];
-
-            // Agrega el producto al carrito
-            $product = array(
-                'productName' => $productName,
-                'price' => $price,
-                'description' => $description,
-                'image' => $image
-            );
-            array_push($_SESSION['cart'], $product);
-
-            // Devuelve una respuesta opcional (puede ser útil para manejar la actualización de la interfaz de usuario)
-            echo "Producto agregado al carrito exitosamente.";
-        }
-        ?>
     </div>
 
     <footer style="background-color: #545454; color: #fff; padding: 20px; text-align: center;">
@@ -248,6 +258,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['vaciar_carrito'])) {
             </div>
         </div>
     </footer>
+
+    <script>
+        // Función para enviar el formulario cuando se cambia la cantidad
+        function actualizarCarrito() {
+            document.getElementById('formCarrito').submit();
+        }
+
+        // Función para actualizar la cantidad cuando se cambia el select
+        function actualizarCantidad(cantidad, productId, index) {
+            // Realizar una solicitud AJAX al servidor para actualizar la cantidad en el carrito
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "actualizar_cantidad.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Manejar la respuesta del servidor (opcional)
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.send("cantidad=" + cantidad + "&productId=" + productId);
+        }
+
+        // Función para eliminar un producto del carrito
+        function eliminarProducto(index) {
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "");
+
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", "eliminar_producto");
+            hiddenField.setAttribute("value", "true");
+            form.appendChild(hiddenField);
+
+            var indexField = document.createElement("input");
+            indexField.setAttribute("type", "hidden");
+            indexField.setAttribute("name", "producto_index");
+            indexField.setAttribute("value", index);
+            form.appendChild(indexField);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+
 </body>
 
 </html>

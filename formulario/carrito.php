@@ -25,6 +25,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_producto']) &
         exit();
     }
 }
+
+// Verificar si se ha enviado el formulario para aplicar un descuento
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['codigo_descuento'])) {
+    $codigo_descuento = $_POST['codigo_descuento'];
+    // Verificar si el código de descuento es válido y aplicar el descuento correspondiente
+    if ($codigo_descuento === "COD20") {
+        // Aplicar descuento del 20%
+        $_SESSION['descuento'] = 0.2;
+    } elseif ($codigo_descuento === "COD10") {
+        // Aplicar descuento del 10%
+        $_SESSION['descuento'] = 0.1;
+    } elseif ($codigo_descuento === "COD5") {
+        // Aplicar descuento del 5%
+        $_SESSION['descuento'] = 0.05;
+    }
+}
+
+// Calcular el precio total teniendo en cuenta la cantidad seleccionada de cada producto
+$total = 0;
+foreach ($_SESSION['cart'] as $item) {
+    $total += ($item['price'] * $item['quantity']);
+}
+
+// Aplicar descuento si existe en la sesión
+if (isset($_SESSION['descuento'])) {
+    $total_descuento = $total * (1 - $_SESSION['descuento']);
+} else {
+    $total_descuento = $total;
+}
 ?>
 
 <!DOCTYPE html>
@@ -126,16 +155,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_producto']) &
         }
 
         .vaciar-carrito-btn {
-    background-color: #e63900;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-right: 10px;
-    margin-bottom: 40px;
-    width: 40%;
+            background-color: #e63900;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 40px;
+            width: 40%;
         }
 
         .vaciar-carrito-btn:hover {
@@ -157,11 +186,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_producto']) &
         .actualizar-carrito-btn:hover {
             background-color: #0056b3;
         }
+
         .tramitar-pedido-btn {
-    margin-right: 10px; /* Establece el margen derecho */
-    margin-bottom: 30px; /* Establece el margen inferior */
-    width: 40%;
-}
+            margin-right: 10px;
+            /* Establece el margen derecho */
+            margin-bottom: 30px;
+            /* Establece el margen inferior */
+            width: 40%;
+        }
     </style>
 </head>
 
@@ -204,48 +236,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_producto']) &
         }
 
 
-        function obtener_cantidad_disponible($producto_id) {
-            
-                
-                $servidor = "localhost"; 
-                $usuario = "root"; 
-                $contraseña = ""; 
-                $base_datos = "carrito"; 
-            
-                // Conexión a la base de datos
-                $conexion = new mysqli($servidor, $usuario, $contraseña, $base_datos);
-            
-                // Verificar la conexión
-                if ($conexion->connect_error) {
-                    die("Error de conexión: " . $conexion->connect_error);
-                }
-            
-                // Consulta para obtener la cantidad disponible del producto
-                $consulta = "SELECT cantidad FROM productos WHERE idproducto = ?";
-            
-                // Preparar la consulta
-                $stmt = $conexion->prepare($consulta);
-            
-                // Vincular parámetro
-                $stmt->bind_param("i", $producto_id);
-            
-                // Ejecutar la consulta
-                $stmt->execute();
-            
-                // Vincular el resultado de la consulta
-                $stmt->bind_result($cantidad_disponible);
-            
-                // Obtener el resultado
-                $stmt->fetch();
-            
-                // Cerrar la consulta y la conexión
-                $stmt->close();
-                $conexion->close();
-            
-                // Devolver la cantidad disponible (0 si no se encuentra el producto)
-                return ($cantidad_disponible !== null) ? $cantidad_disponible : 0;
-            
-            
+        function obtener_cantidad_disponible($producto_id)
+        {
+            $servidor = "localhost";
+            $usuario = "root";
+            $contraseña = "";
+            $base_datos = "carrito";
+
+            // Conexión a la base de datos
+            $conexion = new mysqli($servidor, $usuario, $contraseña, $base_datos);
+
+            // Verificar la conexión
+            if ($conexion->connect_error) {
+                die("Error de conexión: " . $conexion->connect_error);
+            }
+
+            // Consulta para obtener la cantidad disponible del producto
+            $consulta = "SELECT cantidad FROM productos WHERE idproducto = ?";
+
+            // Preparar la consulta
+            $stmt = $conexion->prepare($consulta);
+
+            // Vincular parámetro
+            $stmt->bind_param("i", $producto_id);
+
+            // Ejecutar la consulta
+            $stmt->execute();
+
+            // Vincular el resultado de la consulta
+            $stmt->bind_result($cantidad_disponible);
+
+            // Obtener el resultado
+            $stmt->fetch();
+
+            // Cerrar la consulta y la conexión
+            $stmt->close();
+            $conexion->close();
+
+            // Devolver la cantidad disponible (0 si no se encuentra el producto)
+            return ($cantidad_disponible !== null) ? $cantidad_disponible : 0;
         }
 
         // Verifica si la sesión del carrito existe
@@ -281,17 +310,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_producto']) &
             }
             echo '</table>';
 
-            // Calcular el precio total teniendo en cuenta la cantidad seleccionada de cada producto
-            $total = 0;
-            foreach ($_SESSION['cart'] as $item) {
-                $total += ($item['price'] * $item['quantity']);
-            }
             echo '<center>';
             echo '<button type="button" onclick="actualizarCarrito()" class="actualizar-carrito-btn">Actualizar Carrito</button>'; // Botón para actualizar carrito
             echo '<button type="submit" name="vaciar_carrito" class="vaciar-carrito-btn">Vaciar Carrito</button>';
             echo '<button type="button" onclick="tramitarPedido()" class="tramitar-pedido-btn">Tramitar Pedido</button>';
             echo '</center>';
-            echo '<p class="total-row">Total: $' . $total . '</p>';
+            echo '<p class="total-row">Total: $' . number_format($total_descuento, 2) . ' <span style="color: green;">Descuento aplicado: $' . - number_format($total - $total_descuento, 2) . '</span></p>';
+
+
+            // Campo de texto para ingresar el código de descuento
+            echo '<form method="post" action="">';
+            echo '<input type="text" name="codigo_descuento" placeholder="Código de Descuento" class="descuento-input">';
+            echo '<button type="submit">Aplicar Descuento</button>';
+            echo '</form>';
+
             echo '</form>';
         } else {
             echo '<p>El carrito está vacío.</p>';
@@ -358,23 +390,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_producto']) &
             form.submit();
         }
 
-            function tramitarPedido() {
-        // Realizar una solicitud AJAX al servidor para tramitar el pedido
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "tramitar_pedido.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Manejar la respuesta del servidor
-                alert(xhr.responseText); // Mostrar mensaje de éxito o error
-                if (xhr.responseText === "Pedido tramitado exitosamente.") {
-                    // Redirigir a otra página si el pedido se tramitó correctamente
-                    window.location.href = "index.php";
+        function tramitarPedido() {
+            // Realizar una solicitud AJAX al servidor para tramitar el pedido
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "tramitar_pedido.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Manejar la respuesta del servidor
+                    alert(xhr.responseText); // Mostrar mensaje de éxito o error
+                    if (xhr.responseText === "Pedido tramitado exitosamente.") {
+                        // Redirigir a otra página si el pedido se tramitó correctamente
+                        window.location.href = "index.php";
+                    }
                 }
-            }
-        };
-        xhr.send(); // No es necesario enviar datos en esta solicitud
-    }
+            };
+            xhr.send(); // No es necesario enviar datos en esta solicitud
+        }
     </script>
 
 </body>

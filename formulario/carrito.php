@@ -286,6 +286,7 @@ if (isset($_SESSION['descuento'])) {
             echo '<th>Imagen</th>';
             echo '<th>Precio</th>';
             echo '<th>Cantidad</th>'; // Nuevo campo "Cantidad"
+            echo '<th>Eliminar</th>'; // Nuevo campo "Eliminar"
             echo '</tr>';
             foreach ($_SESSION['cart'] as $key => $item) {
                 echo '<tr>';
@@ -306,6 +307,9 @@ if (isset($_SESSION['descuento'])) {
                 }
                 echo '</select>';
                 echo '</td>'; // Cierra la celda para el menú desplegable
+                echo '<td>'; // Abre la celda para el botón de eliminar
+                echo '<button type="button" onclick="eliminarProducto(' . $key . ')" class="eliminar-producto-btn">Eliminar</button>';
+                echo '</td>'; // Cierra la celda para el botón de eliminar
                 echo '</tr>';
             }
             echo '</table>';
@@ -315,7 +319,7 @@ if (isset($_SESSION['descuento'])) {
             echo '<button type="submit" name="vaciar_carrito" class="vaciar-carrito-btn">Vaciar Carrito</button>';
             echo '<button type="button" onclick="tramitarPedido()" class="tramitar-pedido-btn">Tramitar Pedido</button>';
             echo '</center>';
-            echo '<p class="total-row">Total: $' . number_format($total_descuento, 2) . ' <span style="color: green;">Descuento aplicado: $' . - number_format($total - $total_descuento, 2) . '</span></p>';
+            echo '<p class="total-row">Total: $' . number_format($total_descuento, 2) . ' <span style="color: green;">Descuento aplicado: $' . -number_format($total - $total_descuento, 2) . '</span></p>';
 
 
             // Campo de texto para ingresar el código de descuento

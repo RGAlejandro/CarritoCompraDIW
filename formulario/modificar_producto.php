@@ -10,6 +10,15 @@
 </head>
 <style>
 
+    form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px; 
+    width: 100%;
+}
+ 
 .card-container {
     display: flex;
     flex-direction: column;
@@ -99,21 +108,70 @@
             </div>
         </div>
     </header>
-    
-    <div class="card-container">
-    <div class="header">
-        <h1>Bienvenido a la zona de administración</h1>
-    </div>
-    <div class="menu">
-        <ul>
-            <li><a href="altaProducto.php">Dar alta a un producto</a></li>
-            <li><a href="modificarProductos.php">Modificar Productos</a></li>
-            <li><a href="cambiarPerfilUsuario.php">Cambiar perfil de usuario</a></li>
-        </ul>
-    </div>
-</div>
-</div>
-    
+    <h1>Modificar Producto</h1>
+    <?php
+        // Verificar si se ha enviado el ID del producto en la URL
+        if(isset($_GET['id'])) {
+            // Obtener el ID del producto desde la URL
+            $producto_id = $_GET['id'];
+
+            // Conexión a la base de datos
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "carrito";
+
+            $conn = new mysqli($servername, $username, $password, $dbname);
+
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            // Consulta SQL para obtener la información del producto
+            $sql = "SELECT * FROM productos WHERE idproducto = $producto_id";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                // Mostrar el formulario de modificación con los datos del producto
+                $row = $result->fetch_assoc();
+    ?>
+                <div class="card-container">    
+                <form action="procesar_modificacion_producto.php" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="id_producto" value="<?php echo $row['idproducto']; ?>">
+                    <div class="form-group">
+                        <label for="nombre_producto">Nombre del producto:</label>
+                        <input type="text" id="nombre_producto" name="nombre_producto" value="<?php echo $row['nombre']; ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripción:</label>
+                        <textarea id="descripcion" name="descripcion" required><?php echo $row['descripcion']; ?></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="precio">Precio:</label>
+                        <input type="number" id="precio" name="precio" step="0.01" min="0" value="<?php echo $row['precio']; ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad:</label>
+                        <input type="number" id="cantidad" name="cantidad" min="0" value="<?php echo $row['cantidad']; ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="imagen">Imagen:</label>
+                        <img src="<?php echo '../imagenes/imagenes/' . $row['imagen']; ?>" alt="Imagen actual" width= "80px" height= "80px">
+                        <input type="file" id="imagen" name="imagen" accept="image/*">
+                    </div>
+                    <button type="submit">Guardar producto</button>
+                </form>
+            </div>
+    <?php
+            } else {
+                echo "No se encontró el producto.";
+            }
+
+            $conn->close();
+        } else {
+            echo "ID de producto no especificado.";
+        }
+    ?>
     <footer style="background-color: #545454; color: #fff; padding: 20px; text-align: center;">
         <div style="max-width: 1200px; margin: 0 auto;">
             <div style="display: flex; justify-content: space-between; align-items: flex-start;">

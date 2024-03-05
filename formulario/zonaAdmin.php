@@ -9,26 +9,110 @@
     <title>Document</title>
 </head>
 <style>
-    form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px; 
-    width: 100%;
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+.header {
+    margin-bottom: 20px;
+}
+
+.menu {
+    margin-top: 20px;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu ul li {
+    margin-bottom: 10px;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    padding: 15px 30px;
+    border-radius: 5px;
+    display: block;
+    background-color: #4CAF50;
+    transition: background-color 0.3s ease;
+}
+
+.menu ul li a:hover {
+    background-color: #45a049;
+}
+
+.dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px 0;
+            right: 0;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 8px 12px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .show {
+            display: block;
+        }
 </style>    
 <body>
-    <header>
+<header>
         <div class="logo">
-            <img src="../imagenes/imagenes/Logotipo.png" alt="Logo Hamburguesería">
+            <a href="cartaProducto.php" class="logo">
+                <img src="../imagenes/imagenes/Logotipo.png" alt="Logo Hamburguesería">
+            </a>
         </div>
         
+        <div class="user-info">
+            <div class="dropdown">
+                <img src="../imagenes/imagenes/usuario.png" alt="Usuario" class="user-image" onclick="toggleDropdown()">
+                <div id="dropdownContent" class="dropdown-content">
+                    <a href="editarUsuario.php">Editar Usuario</a>
+                    <a href="index.php">Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
     </header>
+    
     <div class="card-container">
-        <h1>Bienvenido a la zona de administracion</h1>
-        
+    <div class="header">
+        <h1>Bienvenido a la zona de administración</h1>
     </div>
+    <div class="menu">
+        <ul>
+            <li><a href="altaProducto.php">Dar alta a un producto</a></li>
+            <li><a href="modificarProductos.php">Modificar cantidad de productos</a></li>
+            <li><a href="cambiarPerfilUsuario.php">Cambiar perfil de usuario</a></li>
+        </ul>
+    </div>
+</div>
+</div>
     
     <footer style="background-color: #545454; color: #fff; padding: 20px; text-align: center;">
         <div style="max-width: 1200px; margin: 0 auto;">
@@ -75,6 +159,15 @@
         if (loginSuccessMessage) {
             // Si el mensaje se muestra, esperar 5 segundos y luego redirigir
             setTimeout(redirectToCartaProductos, 2000); 
+        }
+
+        function toggleDropdown() {
+            var dropdownContent = document.getElementById("dropdownContent");
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
         }
     </script>
 </body>

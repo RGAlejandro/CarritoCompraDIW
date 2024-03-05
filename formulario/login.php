@@ -44,9 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($authenticated) {
-       
-        header("Location: index.php?login=1");
-        exit();
+        if ($_SESSION['perfil'] === 'usuario') {
+            header("Location: cartaProducto.php");
+            exit();
+        } elseif ($_SESSION['perfil'] === 'administrador') {
+            header("Location: zonaAdmin.php");
+            exit();
+        }
     } else {
         header("Location: index.php?login=0");
         exit();

@@ -108,7 +108,7 @@
             </div>
         </div>
     </header>
-    <h1>Modificar Producto</h1>
+    
     <?php
         // Verificar si se ha enviado el ID del producto en la URL
         if(isset($_GET['id'])) {

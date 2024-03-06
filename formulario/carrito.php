@@ -194,6 +194,30 @@ if (isset($_SESSION['descuento'])) {
             /* Establece el margen inferior */
             width: 40%;
         }
+
+        footer {
+    background-color: #545454;
+    color: #fff;
+    margin-top: 200px;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #545454;
+    z-index: 999;
+}
     </style>
 </head>
 
@@ -219,7 +243,7 @@ if (isset($_SESSION['descuento'])) {
             </div>
         </div>
     </header>
-    <h2>CARRITO</h2>
+    
     <div class="container">
 
         <?php
